@@ -8,9 +8,7 @@ import java.io.IOException;
 
 public class RequestToAPI {
     OkHttpClient client = new OkHttpClient();
-
     String apiUrl = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion";
-
     Request request = new Request.Builder()
             .url(apiUrl)
             .build();
