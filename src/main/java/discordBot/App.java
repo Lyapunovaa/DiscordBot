@@ -1,14 +1,17 @@
 package discordBot;
 
+import apiClient.RequestToAPI;
 import discord4j.core.DiscordClient;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.channel.MessageChannel;
 
+import java.io.IOException;
+
 public class App {
-    public static void main(String[] args) {
-        String token = System.getenv("BOT_TOKEN");
+    public static void main(String[] args) throws IOException {
+       /* String token = System.getenv("BOT_TOKEN");
         DiscordClient client = DiscordClient.create(token);
         GatewayDiscordClient gateway = client.login().block();
 
@@ -22,7 +25,10 @@ public class App {
             }
         });
 
-        gateway.onDisconnect().block();
+        gateway.onDisconnect().block();*/
+
+        RequestToAPI req = new RequestToAPI();
+        req.RequestToAPI();
 
 
     }
