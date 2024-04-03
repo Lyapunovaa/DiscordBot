@@ -9,19 +9,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestToAPI {
+public  class RequestToAPI {
     ObjectMapper objectMapper = new ObjectMapper();
 
 
-    public RequestBody buildBody() throws Exception {
+    public RequestBody buildBody(String request) throws Exception {
 
         // Блок в котором создаем два сообщения и собираем в массив
         DTO.MessageGptDto system = new DTO.MessageGptDto();
         system.setRole("system");
-        system.setText("Ты заменяешь первое слово в своём ответе на Шалом");
+        system.setText("ты бросаешь виртуальный кубик, абсолютно случайно может выпасть значение от 1 до 6," +
+                " если выпадает <=3 то пользователю не повезло и ты отправляешь за ответом в поиск Яндекса. Если >3 " +
+                "- то ему повезло и ты отвечаешь. При этом значение броска пишешь в начале ответа и повезло\\\\не повезло");
         DTO.MessageGptDto user = new DTO.MessageGptDto();
         user.setRole("user");
-        user.setText("Подскажи какое расстоянее способен пролтеть аист");
+        user.setText(request);
 
         List<DTO.MessageGptDto> messages = new ArrayList<>();
         messages.add(system);
@@ -41,11 +43,11 @@ public class RequestToAPI {
     }
 
 
-    public void RequestToAPI() throws Exception {
+    public String RequestToAPI(String req) throws Exception {
         String IAMtoken = Properties.properties.iamToken();
         OkHttpClient client = new OkHttpClient().newBuilder().build();
 
-        RequestBody body = buildBody();
+        RequestBody body = buildBody(req);
 
         Request request = new Request.Builder()
                 .url(Properties.properties.yandexGptUrl())
@@ -59,5 +61,6 @@ public class RequestToAPI {
         DTO.ResponseGptDto responseBody = objectMapper.readValue(json, DTO.ResponseGptDto.class);
 
         System.out.println(responseBody.getResult().getAlternatives().getFirst().getMessage().getText());
+    return responseBody.getResult().getAlternatives().getFirst().getMessage().getText();
     }
 }
