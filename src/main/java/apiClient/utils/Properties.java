@@ -24,5 +24,7 @@ public interface Properties extends Config {
     @Key("yandex.gpt.url")
     String yandexGptUrl();
 
+    @Key("iam.token")
+    String iamToken();
 
 }

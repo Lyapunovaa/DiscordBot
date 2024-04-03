@@ -10,7 +10,7 @@ import discord4j.core.object.entity.channel.MessageChannel;
 import java.io.IOException;
 
 public class App {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
        /* String token = System.getenv("BOT_TOKEN");
         DiscordClient client = DiscordClient.create(token);
         GatewayDiscordClient gateway = client.login().block();

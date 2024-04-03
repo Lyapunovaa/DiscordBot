@@ -14,7 +14,7 @@ public class DTO {
 
     @Data
     public static class RequestGptDto {
-        private String modelUrl;
+        private String modelUri;
         private boolean stream;
         private double temperature;
         private int maxTokens;
