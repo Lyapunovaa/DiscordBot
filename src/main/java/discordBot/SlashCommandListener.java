@@ -19,7 +19,7 @@ public class SlashCommandListener {
         //commands.add(new GreetCommand());
     }
 
-    public static Mono<Void> handle(ChatInputInteractionEvent event) {
+    /*public static Mono<Void> handle(ChatInputInteractionEvent event) {
         // Convert our array list to a flux that we can iterate through
         return Flux.fromIterable(commands)
                 //Filter out all commands that don't match the name of the command this event is for
@@ -28,5 +28,5 @@ public class SlashCommandListener {
                 .next()
                 //have our command class handle all the logic related to its specific command.
                 .flatMap(command -> command.handle(event));
-    }
+    }*/
 }
