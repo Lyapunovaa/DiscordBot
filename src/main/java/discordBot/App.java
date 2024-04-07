@@ -33,7 +33,7 @@ public class App {
         }
 
 
-        //слушаем все сообщения и проверяем которые начинаются на  !gpt
+       /* //слушаем все сообщения и проверяем которые начинаются на  !gpt
         assert gateway != null;
         gateway.on(MessageCreateEvent.class).subscribe(event -> {
             Message message = event.getMessage();
@@ -46,7 +46,7 @@ public class App {
                     throw new RuntimeException(e);
                 }
             }
-        });
+        });*/
 
         //слушаем все эвенты, если это команда то отвечаем
         gateway.on(ChatInputInteractionEvent.class, event -> {

@@ -2,14 +2,18 @@ package discordBot.commands;
 
 import apiClient.RequesterToYaGPT;
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent;
-import discord4j.core.event.domain.message.MessageCreateEvent;
-import discord4j.core.object.command.ApplicationCommandInteractionOption;
 import discord4j.core.object.entity.Message;
 import reactor.core.publisher.Mono;
 
 public class RequestToGPTCommand implements SlashCommand {
 
-    RequesterToYaGPT requester;
+   static RequesterToYaGPT requester = new RequesterToYaGPT();
+
+
+    private static Mono<Message> methodThatTakesALongTime(ChatInputInteractionEvent event, String textMessage) {
+        String responseMessage = requester.RequestToAPI(textMessage);
+        return event.createFollowup(STR."Запрос - \{textMessage} \n\n\{responseMessage}");
+    }
 
     @Override
     public Mono<Void> handle(ChatInputInteractionEvent event) {
@@ -17,12 +21,7 @@ public class RequestToGPTCommand implements SlashCommand {
                 .flatMap(it -> it.getValue() )
                 .map(it -> it.asString())
                 .orElseThrow((() -> new IllegalArgumentException("empty message body")));
-        System.out.println(message);
+        return event.deferReply().withEphemeral(false).then(methodThatTakesALongTime(event,message).then());
 
-        //requester.RequestToAPI(message);
-
-        return event.reply()
-                .withEphemeral(false)
-                .withContent("new cash");
     }
 }
