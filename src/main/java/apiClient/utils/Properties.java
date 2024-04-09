@@ -15,7 +15,7 @@ public interface Properties extends Config {
     @Key("discord.bot.token")
     String discordToken();
 
-    @Key("yandex.gpt.oauth.token")
+    @Key("yandex.oauth.token")
     String yaGptOauthToken();
 
     @Key("yandex.catalog.id")
@@ -26,5 +26,8 @@ public interface Properties extends Config {
 
     @Key("iam.token")
     String iamToken();
+
+    @Key("yandex.art.url")
+    String yandexArtUrl();
 
 }

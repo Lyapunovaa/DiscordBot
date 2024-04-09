@@ -8,11 +8,11 @@ import okhttp3.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public  class RequesterToYaGPT {
+public class RequesterToYaGPT {
     ObjectMapper objectMapper = new ObjectMapper();
 
 
-    public RequestBody buildBody(String textRequest)  {
+    public RequestBody buildBody(String textRequest) {
 
         // Блок в котором создаем два сообщения и собираем в массив
         DTO.MessageGptDto system = new DTO.MessageGptDto();
@@ -35,36 +35,27 @@ public  class RequesterToYaGPT {
 
         try {
             String json = objectMapper.writeValueAsString(requestDto);
-
-            RequestBody body = RequestBody.create(MediaType.parse("application/json;"), json);
-            return body;
-        } catch (Exception e){
+            return RequestBody.create(json, MediaType.parse("application/json;"));
+        } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
     }
 
 
-    public String RequestToAPI(String req)  {
+    public String RequestToAPI(String req) {
         String IAMtoken = Properties.properties.iamToken();
         OkHttpClient client = new OkHttpClient().newBuilder().build();
 
         RequestBody body = buildBody(req);
 
-        Request request = new Request.Builder()
-                .url(Properties.properties.yandexGptUrl())
-                .method("POST", body)
-                .addHeader("x-folder-id", Properties.properties.yaCatalogId())
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Authorization", STR."Bearer \{IAMtoken}")
-                .build();
-        try{
-        Response response = client.newCall(request).execute();
-        String json = response.body().string();
-        DTO.ResponseGptDto responseBody = objectMapper.readValue(json, DTO.ResponseGptDto.class);
+        Request request = new Request.Builder().url(Properties.properties.yandexGptUrl()).method("POST", body).addHeader("x-folder-id", Properties.properties.yaCatalogId()).addHeader("Content-Type", "application/json").addHeader("Authorization", STR."Bearer \{IAMtoken}").build();
+        try {
+            Response response = client.newCall(request).execute();
+            String json = response.body().string();
+            DTO.ResponseGptDto responseBody = objectMapper.readValue(json, DTO.ResponseGptDto.class);
 
-      //  System.out.println(responseBody.getResult().getAlternatives().getFirst().getMessage().getText());
-    return responseBody.getResult().getAlternatives().getFirst().getMessage().getText();
-        } catch (Exception e){
+            return responseBody.getResult().getAlternatives().getFirst().getMessage().getText();
+        } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
     }
