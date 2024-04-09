@@ -1,6 +1,6 @@
 package discordBot.commands;
 
-import apiClient.RequesterToYaGPT;
+import apiClient.api.RequesterToYaGPT;
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent;
 import discord4j.core.object.entity.Message;
 import reactor.core.publisher.Mono;

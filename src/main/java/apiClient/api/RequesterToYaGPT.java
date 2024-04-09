@@ -1,6 +1,5 @@
-package apiClient;
+package apiClient.api;
 
-import apiClient.configs.ParamsOfGPT;
 import apiClient.dto.DTO;
 import apiClient.utils.Properties;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,6 +1,6 @@
 package discordBot;
 
-import apiClient.RequesterToYaGPT;
+import apiClient.api.RequesterToYaGPT;
 import apiClient.utils.Properties;
 import discord4j.core.DiscordClient;
 import discord4j.core.GatewayDiscordClient;
