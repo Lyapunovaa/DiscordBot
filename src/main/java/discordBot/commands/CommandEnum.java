@@ -15,11 +15,11 @@ public enum CommandEnum {
     REQUEST(
             "gpt",
             new RequestToGPTCommand(),
-            "request to YaGPT cloud service with text from user",
+            "Запросы в GPT",
             List.of(
                     ApplicationCommandOptionData.builder()
                             .name("message")
-                            .description("Your request to Gpt")
+                            .description("Твой запрос в GPT")
                             .type(ApplicationCommandOption.Type.STRING.getValue())
                             .required(true)
                             .build()

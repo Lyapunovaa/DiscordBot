@@ -5,9 +5,6 @@ import apiClient.utils.Properties;
 import discord4j.core.DiscordClient;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent;
-import discord4j.core.event.domain.message.MessageCreateEvent;
-import discord4j.core.object.entity.Message;
-import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.discordjson.json.ApplicationCommandRequest;
 import discordBot.commands.CommandEnum;
 
@@ -20,28 +17,33 @@ public class App {
         DiscordClient client = DiscordClient.create(token);
         GatewayDiscordClient gateway = client.login().block();
 
+
         //Регистрируем все команды из enum в дискорде
-        for (CommandEnum c : CommandEnum.values()){
-            final ApplicationCommandRequest commandRequest = ApplicationCommandRequest.builder()
-                    .name(c.commandName)
-                    .description(c.description)
-                    .addAllOptions(c.agruments)
-                    .build();
-            gateway.getRestClient().getApplicationService()
-                    .createGlobalApplicationCommand(gateway.getRestClient().getApplicationId().block(), commandRequest)
-                    .block();
+        for (CommandEnum c : CommandEnum.values()) {
+            final ApplicationCommandRequest commandRequest = ApplicationCommandRequest.builder().name(c.commandName).description(c.description).addAllOptions(c.agruments).build();
+            gateway.getRestClient().getApplicationService().createGlobalApplicationCommand(gateway.getRestClient().getApplicationId().block(), commandRequest).block();
         }
 
 
-       /* //слушаем все сообщения и проверяем которые начинаются на  !gpt
-        assert gateway != null;
+
+        //TODO удалить после удаления команд
+        /*
+          gateway.getRestClient().getApplicationService()
+                .getGlobalApplicationCommands(gateway.getRestClient().getApplicationId().block())
+                .filter(command -> command.name().equals("gpt1"))
+                .flatMap(command -> gateway.getRestClient().getApplicationService()
+                     .deleteGlobalApplicationCommand(gateway.getRestClient().getApplicationId().block(), command.id().asLong()));
+        */
+
+        // TODO слушаем все сообщения и проверяем которые начинаются в startWith. В дальнейшем можно использовать
+    /*    assert gateway != null;
         gateway.on(MessageCreateEvent.class).subscribe(event -> {
             Message message = event.getMessage();
             MessageChannel channel = message.getChannel().block();
-            if (message.getContent().startsWith("!gpt")) {
+            if (message.getContent().toLowerCase().startsWith("")) {
                 try {
                     assert channel != null;
-                    channel.createMessage(req.RequestToAPI(message.getContent())).block();
+                    channel.createMessage().block();
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
