@@ -49,7 +49,6 @@ public class RequesterToYaART {
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
-
         return idOfImage;
     }
 
