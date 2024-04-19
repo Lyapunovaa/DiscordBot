@@ -24,6 +24,19 @@ public enum CommandEnum {
                             .required(true)
                             .build()
             )
+    ),
+    ART(
+            "makeart",
+            new MakeArtCommand(),
+            "make an art from request",
+            List.of(
+                    ApplicationCommandOptionData.builder()
+                            .name("message")
+                            .description("Твой запрос для создания картинки")
+                            .type(ApplicationCommandOption.Type.STRING.getValue())
+                            .required(true)
+                            .build()
+            )
     );
     public String commandName;
     public SlashCommand slashCommand;

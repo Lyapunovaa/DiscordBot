@@ -18,6 +18,7 @@ public class App {
         GatewayDiscordClient gateway = client.login().block();
 
 
+
         //Регистрируем все команды из enum в дискорде
         for (CommandEnum c : CommandEnum.values()) {
             final ApplicationCommandRequest commandRequest = ApplicationCommandRequest.builder().name(c.commandName).description(c.description).addAllOptions(c.agruments).build();
@@ -36,19 +37,24 @@ public class App {
         */
 
         // TODO слушаем все сообщения и проверяем которые начинаются в startWith. В дальнейшем можно использовать
-    /*    assert gateway != null;
+         /*assert gateway != null;
         gateway.on(MessageCreateEvent.class).subscribe(event -> {
             Message message = event.getMessage();
             MessageChannel channel = message.getChannel().block();
             if (message.getContent().toLowerCase().startsWith("")) {
                 try {
                     assert channel != null;
+                    channel.createMessage(messageSpec -> {
+                        messageSpec.addFile()
+                    })
                     channel.createMessage().block();
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             }
         });*/
+
+
 
         //слушаем все эвенты, если это команда то отвечаем
         gateway.on(ChatInputInteractionEvent.class, event -> {

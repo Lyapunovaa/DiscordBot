@@ -30,4 +30,7 @@ public interface Properties extends Config {
     @Key("yandex.art.url")
     String yandexArtUrl();
 
+    @Key("base64.image")
+    String base64Image();
+
 }
