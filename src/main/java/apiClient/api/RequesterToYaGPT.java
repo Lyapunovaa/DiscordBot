@@ -1,6 +1,7 @@
 package apiClient.api;
 
 import apiClient.dto.DTO_GPT;
+import apiClient.dto.DTO_GPT_RESP;
 import apiClient.utils.Properties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.*;
@@ -30,8 +31,7 @@ public class RequesterToYaGPT {
         try {
             Response response = client.newCall(request).execute();
             String json = response.body().string();
-            DTO_GPT.ResponseGptDto responseBody = objectMapper.readValue(json, DTO_GPT.ResponseGptDto.class);
-
+            DTO_GPT_RESP.ResponseGptDto responseBody = objectMapper.readValue(json, DTO_GPT_RESP.ResponseGptDto.class);
             return responseBody.getResult().getAlternatives().getFirst().getMessage().getText();
         } catch (Exception e) {
             throw new IllegalArgumentException(e);

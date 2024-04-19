@@ -1,6 +1,8 @@
 package apiClient.dto;
 
 import apiClient.utils.Properties;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -19,44 +21,58 @@ public class DTO_GPT {
     @Builder
     public static class RequestGptDto {
         @Builder.Default
-        private final String modelUri = STR."gpt://\{Properties.properties.yaCatalogId()}/yandexgpt-lite/latest" ;
+        private final String modelUri = STR."gpt://\{Properties.properties.yaCatalogId()}/yandexgpt-lite/latest";
         @Builder.Default
         private final boolean stream = false;
         @Builder.Default
         private final double temperature = 0.1;
         @Builder.Default
         private final int maxTokens = 2000;
-        private final List<MessageGptDto> messages;
+        private final List<DTO_GPT.MessageGptDto> messages;
     }
 
 
     @Data
-    @Builder
+    @AllArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class ResponseGptDto {
-        private final ResultGptDto result;
+        private DTO_GPT.ResultGptDto result;
     }
 
 
     @Data
-    @Builder
+    @AllArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class ResultGptDto {
-        private final List<AlternativesGptDto> alternatives;
-        private final UsageGptDto usage;
-        private final String modelVersion;
+        private List<DTO_GPT.AlternativesGptDto> alternatives;
+        private DTO_GPT.UsageGptDto usage;
+        private String modelVersion;
     }
 
     @Data
-    @Builder
+    @AllArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class UsageGptDto {
-        private final String inputTextTokens;
-        private final String completionTokens;
-        private final String totalTokens;
+        private String inputTextTokens;
+        private String completionTokens;
+        private String totalTokens;
+
     }
 
     @Data
-    @Builder
-    public static class AlternativesGptDto {
-        private final MessageGptDto message;
-        private final String status;
+    @AllArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class ResponseMessageGptDto {
+        private String role;
+        private String text;
     }
+
+    @Data
+    @AllArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class AlternativesGptDto {
+        private DTO_GPT.ResponseMessageGptDto message;
+        private String status;
+    }
+
 }
