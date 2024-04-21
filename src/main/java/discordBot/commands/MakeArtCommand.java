@@ -14,11 +14,11 @@ import java.util.Random;
 public class MakeArtCommand implements SlashCommand {
 
     static RequesterToYaART requester = new RequesterToYaART();
+    static Random rand = new Random();
 
     private static Mono<Message> methodThatTakesALongTime(ChatInputInteractionEvent event) {
         byte[] decodedImage;
         ByteArrayInputStream byteArrayInputStream;
-        Random rand = new Random();
 
         var message = event.getOption("message")
                 .flatMap(it -> it.getValue())
