@@ -30,7 +30,6 @@ public interface Properties extends Config {
     @Key("yandex.art.url")
     String yandexArtUrl();
 
-
     @Key("yandex.get.art.url")
     String yandexGetArtUrl();
 

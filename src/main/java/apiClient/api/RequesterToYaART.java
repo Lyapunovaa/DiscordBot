@@ -11,7 +11,6 @@ import java.util.Base64;
 public class RequesterToYaART {
     static ObjectMapper objectMapper = new ObjectMapper();
 
-
     //Отправляем идентификатор, получаем массив байт
     public static byte[] getImageById(String id) {
         OkHttpClient client = new OkHttpClient().newBuilder().build();
@@ -29,12 +28,13 @@ public class RequesterToYaART {
             do {
                 Response response = client.newCall(request).execute();
                 String json = response.body().string();
-                System.out.println("JSONNNN".concat(json.substring(0,100)));
+                System.out.println(json.substring(0, 100));
                 responseGetImageArtDTO = objectMapper.readValue(json, DTO_ART_RESP.GetImageArtDTO.class);
-                if(responseGetImageArtDTO.isDone()){
+                if (responseGetImageArtDTO.isDone()) {
                     image = Base64.getDecoder().decode(responseGetImageArtDTO.getResponse().getImage());
                     return image;
                 }
+                //"Поллинг"
                 Thread.sleep(1000);
             } while (true);
         } catch (Exception e) {
@@ -68,15 +68,15 @@ public class RequesterToYaART {
         try {
             Response response = client.newCall(request).execute();
             String json = response.body().string();
-
-            System.out.println(json);
             DTO_ART_RESP.ResponseGenerateArtDto responseBody = objectMapper.readValue(json, DTO_ART_RESP.ResponseGenerateArtDto.class);
+
+            if (!response.isSuccessful() && !responseBody.getError().isEmpty()) {
+                throw new Exception(responseBody.getError());
+            }
             idOfImage = responseBody.getId();
-            System.out.println(idOfImage.concat(" GET ID"));
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
-
         return getImageById(idOfImage);
     }
 

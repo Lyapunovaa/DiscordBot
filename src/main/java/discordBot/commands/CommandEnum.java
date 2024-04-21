@@ -15,7 +15,7 @@ public enum CommandEnum {
     REQUEST(
             "gpt",
             new RequestToGPTCommand(),
-            "Запросы в GPT",
+            "Запросы в текстовый GPT",
             List.of(
                     ApplicationCommandOptionData.builder()
                             .name("message")
@@ -28,7 +28,7 @@ public enum CommandEnum {
     ART(
             "makeart",
             new MakeArtCommand(),
-            "make an art from request",
+            "Делает картинку по запросу",
             List.of(
                     ApplicationCommandOptionData.builder()
                             .name("message")

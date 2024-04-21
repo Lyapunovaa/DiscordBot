@@ -8,7 +8,7 @@ public class ChangeTemperature implements SlashCommand {
 
     @Override
     public Mono<Void> handle(ChatInputInteractionEvent event) {
-       //TODO Release this
+       //TODO Release this #3
         return null;
     }
 }
