@@ -18,13 +18,11 @@ public class App {
         GatewayDiscordClient gateway = client.login().block();
 
 
-
         //Регистрируем все команды из enum в дискорде
         for (CommandEnum c : CommandEnum.values()) {
             final ApplicationCommandRequest commandRequest = ApplicationCommandRequest.builder().name(c.commandName).description(c.description).addAllOptions(c.agruments).build();
             gateway.getRestClient().getApplicationService().createGlobalApplicationCommand(gateway.getRestClient().getApplicationId().block(), commandRequest).block();
         }
-
 
 
         //TODO удалить после удаления команд
@@ -53,7 +51,6 @@ public class App {
                 }
             }
         });*/
-
 
 
         //слушаем все эвенты, если это команда то отвечаем

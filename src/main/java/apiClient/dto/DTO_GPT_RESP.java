@@ -18,17 +18,9 @@ public class DTO_GPT_RESP {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class ResultGptDto {
         private List<DTO_GPT_RESP.AlternativesGptDto> alternatives;
-     //   private DTO_GPT_RESP.UsageGptDto usage;
         private String modelVersion;
     }
 
-  /*  @Data
-    public static class UsageGptDto {
-        private String inputTextTokens;
-        private String completionTokens;
-        private String totalTokens;
-
-    }*/
 
     @Data
     public static class ResponseMessageGptDto {

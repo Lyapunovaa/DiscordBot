@@ -1,7 +1,6 @@
 package apiClient.dto;
 
 import apiClient.utils.Properties;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,7 +9,6 @@ import java.util.List;
 public class DTO_ART {
 
     //Request
-
     @Data
     @Builder
     public static class RequestArtDto {
@@ -36,8 +34,6 @@ public class DTO_ART {
         @Builder.Default
         private final long seed = 2123412;
     }
-
-
 
 
 }
