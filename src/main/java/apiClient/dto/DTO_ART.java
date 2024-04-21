@@ -31,8 +31,7 @@ public class DTO_ART {
     public static class GenerationOptionsArtDto {
         @Builder.Default
         private final String mime_type = "image/jpeg";
-        @Builder.Default
-        private final long seed = 2123412;
+        private final long seed;
     }
 
 

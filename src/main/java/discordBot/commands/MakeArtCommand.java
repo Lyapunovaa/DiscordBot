@@ -9,6 +9,7 @@ import reactor.core.publisher.Mono;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
+import java.util.Random;
 
 public class MakeArtCommand implements SlashCommand {
 
@@ -17,6 +18,8 @@ public class MakeArtCommand implements SlashCommand {
     private static Mono<Message> methodThatTakesALongTime(ChatInputInteractionEvent event) {
         byte[] decodedImage;
         ByteArrayInputStream byteArrayInputStream;
+        Random rand = new Random();
+
         var message = event.getOption("message")
                 .flatMap(it -> it.getValue())
                 .map(it -> it.asString())
@@ -27,7 +30,8 @@ public class MakeArtCommand implements SlashCommand {
                     .messages(List.of(
                                     DTO_ART.MessagesArtDto.builder().text(message).build()
                             )
-                    ).generation_options(DTO_ART.GenerationOptionsArtDto.builder().build())
+                    ).generation_options(DTO_ART.GenerationOptionsArtDto.builder()
+                            .seed(rand.nextLong(Long.MAX_VALUE)).build())
                     .build());
             byteArrayInputStream = new ByteArrayInputStream(decodedImage);
             return event.editReply().withFiles(MessageCreateFields.File.of("image.jpeg", byteArrayInputStream));
