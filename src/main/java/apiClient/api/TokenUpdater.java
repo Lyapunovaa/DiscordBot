@@ -1,39 +1,41 @@
 package apiClient.api;
 
 import apiClient.configs.TokenManager;
-import apiClient.dto.DTO_GPT;
-import apiClient.dto.DTO_GPT_RESP;
+import apiClient.dto.TokenDto;
+import apiClient.dto.TokenGetDto;
 import apiClient.utils.Properties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.*;
 
-public class RequesterToYaGPT {
-    ObjectMapper objectMapper = new ObjectMapper();
+public class TokenUpdater {
+    static ObjectMapper objectMapper = new ObjectMapper();
 
-    public String generateResponse(DTO_GPT.RequestGptDto dto) {
+
+    public void updateToken() {
         OkHttpClient client = new OkHttpClient().newBuilder().build();
+        TokenDto.RequestTokenDto tokenDto = TokenDto.RequestTokenDto.builder().build();
+
 
         RequestBody body;
         try {
-            String json = objectMapper.writeValueAsString(dto);
+            String json = objectMapper.writeValueAsString(tokenDto);
             body = RequestBody.create(json, MediaType.parse("application/json;"));
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
 
-
         Request request = new Request.Builder()
-                .url(Properties.properties.yandexGptUrl())
+                .url(Properties.properties.yandexUpdateTokenUrl())
                 .method("POST", body)
-                .addHeader("x-folder-id", Properties.properties.yaCatalogId())
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Authorization", "Bearer ".concat(TokenManager.getInstance().getIamtoken()))
                 .build();
         try {
+
             Response response = client.newCall(request).execute();
             String json = response.body().string();
-            DTO_GPT_RESP.ResponseGptDto responseBody = objectMapper.readValue(json, DTO_GPT_RESP.ResponseGptDto.class);
-            return responseBody.getResult().getAlternatives().getFirst().getMessage().getText();
+            TokenGetDto.ResponseTokenDto responseBody = objectMapper.readValue(json, TokenGetDto.ResponseTokenDto.class);
+            TokenManager.getInstance().setIamtoken(responseBody.getIamToken());
+
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }

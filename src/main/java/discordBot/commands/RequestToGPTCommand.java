@@ -4,6 +4,7 @@ import apiClient.api.RequesterToYaGPT;
 import apiClient.dto.DTO_GPT;
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent;
 import discord4j.core.object.entity.Message;
+import discordBot.utils.SlashCommand;
 import lombok.SneakyThrows;
 import reactor.core.publisher.Mono;
 

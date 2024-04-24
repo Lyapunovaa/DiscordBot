@@ -1,12 +1,13 @@
 package discordBot;
 
 import apiClient.api.RequesterToYaGPT;
+import apiClient.configs.TokenManager;
 import apiClient.utils.Properties;
 import discord4j.core.DiscordClient;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent;
 import discord4j.discordjson.json.ApplicationCommandRequest;
-import discordBot.commands.CommandEnum;
+import discordBot.utils.CommandEnum;
 
 public class App {
 
@@ -16,6 +17,11 @@ public class App {
         String token = Properties.properties.discordToken();
         DiscordClient client = DiscordClient.create(token);
         GatewayDiscordClient gateway = client.login().block();
+        TokenManager.getInstance().setIamtoken("asdf");
+
+        System.out.println("Instance iam ".concat(TokenManager.getInstance().getIamtoken()));
+
+
 
 
         //Регистрируем все команды из enum в дискорде

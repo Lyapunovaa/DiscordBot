@@ -33,4 +33,7 @@ public interface Properties extends Config {
     @Key("yandex.get.art.url")
     String yandexGetArtUrl();
 
+    @Key("yandex.update.token.url")
+    String yandexUpdateTokenUrl();
+
 }

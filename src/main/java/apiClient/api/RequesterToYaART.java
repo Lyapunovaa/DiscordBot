@@ -1,5 +1,6 @@
 package apiClient.api;
 
+import apiClient.configs.TokenManager;
 import apiClient.dto.DTO_ART;
 import apiClient.dto.DTO_ART_RESP;
 import apiClient.utils.Properties;
@@ -15,13 +16,17 @@ public class RequesterToYaART {
     public static byte[] getImageById(String id) {
         OkHttpClient client = new OkHttpClient().newBuilder().build();
         byte[] image;
+
+
+        System.out.println("IAM token from getImage ".concat(TokenManager.getInstance().getIamtoken()));
         Request request = new Request.Builder()
                 .url(Properties.properties.yandexGetArtUrl().concat(id))
                 .get()
                 .addHeader("x-folder-id", Properties.properties.yaCatalogId())
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Authorization", STR."Bearer \{Properties.properties.iamToken()}")
+                .addHeader("Authorization", "Bearer ".concat(TokenManager.getInstance().getIamtoken()))
                 .build();
+
 
         try {
             DTO_ART_RESP.GetImageArtDTO responseGetImageArtDTO;
@@ -63,7 +68,7 @@ public class RequesterToYaART {
                 .method("POST", body)
                 .addHeader("x-folder-id", Properties.properties.yaCatalogId())
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Authorization", STR."Bearer \{IAMtoken}")
+                .addHeader("Authorization", "Bearer ".concat(TokenManager.getInstance().getIamtoken()))
                 .build();
         try {
             Response response = client.newCall(request).execute();

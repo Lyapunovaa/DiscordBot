@@ -5,6 +5,7 @@ import apiClient.dto.DTO_ART;
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent;
 import discord4j.core.object.entity.Message;
 import discord4j.core.spec.MessageCreateFields;
+import discordBot.utils.SlashCommand;
 import reactor.core.publisher.Mono;
 
 import java.io.ByteArrayInputStream;

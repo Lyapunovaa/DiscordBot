@@ -1,7 +1,11 @@
-package discordBot.commands;
+package discordBot.utils;
 
 import discord4j.core.object.command.ApplicationCommandOption;
 import discord4j.discordjson.json.ApplicationCommandOptionData;
+import discordBot.commands.MakeArtCommand;
+import discordBot.commands.PingCommand;
+import discordBot.commands.RequestToGPTCommand;
+import discordBot.commands.UpdateTokenCommand;
 
 import java.util.List;
 
@@ -37,7 +41,14 @@ public enum CommandEnum {
                             .required(true)
                             .build()
             )
+    ),
+    UPDATE_TOKEN(
+            "updatetoken",
+            new UpdateTokenCommand(),
+            "basic ping command heh",
+            List.of()
     );
+
     public String commandName;
     public SlashCommand slashCommand;
     public String description;
