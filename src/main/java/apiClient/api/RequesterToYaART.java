@@ -17,8 +17,6 @@ public class RequesterToYaART {
         OkHttpClient client = new OkHttpClient().newBuilder().build();
         byte[] image;
 
-
-        System.out.println("IAM token from getImage ".concat(TokenManager.getInstance().getIamtoken()));
         Request request = new Request.Builder()
                 .url(Properties.properties.yandexGetArtUrl().concat(id))
                 .get()
@@ -27,13 +25,11 @@ public class RequesterToYaART {
                 .addHeader("Authorization", "Bearer ".concat(TokenManager.getInstance().getIamtoken()))
                 .build();
 
-
         try {
             DTO_ART_RESP.GetImageArtDTO responseGetImageArtDTO;
             do {
                 Response response = client.newCall(request).execute();
                 String json = response.body().string();
-                System.out.println(json.substring(0, 100));
                 responseGetImageArtDTO = objectMapper.readValue(json, DTO_ART_RESP.GetImageArtDTO.class);
                 if (responseGetImageArtDTO.isDone()) {
                     image = Base64.getDecoder().decode(responseGetImageArtDTO.getResponse().getImage());
@@ -51,7 +47,6 @@ public class RequesterToYaART {
 
     //Первый шаг. Отправляем запрос с запросом. Получаем идентификатор картинки
     public byte[] sendRequestToGenerateImage(DTO_ART.RequestArtDto dto) {
-        String IAMtoken = Properties.properties.iamToken();
         OkHttpClient client = new OkHttpClient().newBuilder().build();
         String idOfImage;
 

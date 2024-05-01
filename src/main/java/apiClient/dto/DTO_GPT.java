@@ -21,13 +21,13 @@ public class DTO_GPT {
     @Builder
     public static class RequestGptDto {
         @Builder.Default
-        private final String modelUri = STR."gpt://\{Properties.properties.yaCatalogId()}/yandexgpt-lite/latest";
+        private final String modelUri = STR."gpt://\{Properties.properties.yaCatalogId()}/yandexgpt/latest";
         @Builder.Default
         private final boolean stream = false;
         @Builder.Default
-        private final double temperature = 0.1;
+        private final double temperature = 0.3;
         @Builder.Default
-        private final int maxTokens = 2000;
+        private final int maxTokens = 1900;
         private final List<DTO_GPT.MessageGptDto> messages;
     }
 

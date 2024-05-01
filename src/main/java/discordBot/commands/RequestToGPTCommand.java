@@ -19,11 +19,17 @@ public class RequestToGPTCommand implements SlashCommand {
     private static Mono<Message> methodThatTakesALongTime(ChatInputInteractionEvent event, String textMessage) {
         String responseMessage = requester.generateResponse(DTO_GPT.RequestGptDto.builder()
                 .messages(List.of(
-                        DTO_GPT.MessageGptDto.builder().role("system").text("Ты бездушный ИИ").build(),
+                        DTO_GPT.MessageGptDto.builder().role("system").text("Ты милая бабуля которая очень хочет всем помочь").build(),
                         DTO_GPT.MessageGptDto.builder().role("user").text(textMessage).build()
                 )).build()
         );
-        return event.editReply(STR."Запрос - \{textMessage} \n\n\{responseMessage}");
+
+        System.out.println("Size of response is ".concat(String.valueOf(responseMessage.length())));
+
+        if (responseMessage.length() >= 1999) {
+            Mono<Message> messageMono = event.editReply(responseMessage.substring(0, 1999));
+            return messageMono;
+        } else return event.editReply(responseMessage);
     }
 
     @Override
